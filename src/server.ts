@@ -10,7 +10,8 @@ app.use(cors());
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
-        origin: "http://localhost:5173", // Porta do Vite
+        // origin: "http://localhost:5173", // Porta do Vite
+        origin: "https://jogo-da-velha-client.vercel.app/",
         methods: ["GET", "POST"],
     },
 });
