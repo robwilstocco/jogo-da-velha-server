@@ -5,7 +5,10 @@ import cors from "cors";
 import createGame from "./game/game";
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: ["https://jogo-da-velha-client.vercel.app/", "http://localhost:5173"],
+    credentials: true,
+}));
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -54,12 +57,12 @@ io.on("connect", (socket) => {
 
     socket.on("disconnect", () => {
         console.log("> Player disconnected: ", socket.id);
-        if(game.state.players.viewers.includes(socket.id)){
+        if (game.state.players.viewers.includes(socket.id)) {
             game.removePlayer(socket.id)
-            io.emit("players", game.state.players)            
-        }else{
+            io.emit("players", game.state.players)
+        } else {
             game.removePlayer(socket.id)
-            io.emit("players", game.state.players)            
+            io.emit("players", game.state.players)
             game.reset();
             io.emit("board", game.state.board)
             io.emit("reset")
@@ -69,5 +72,5 @@ io.on("connect", (socket) => {
 
 const PORT = process.env.PORT || 3000;
 httpServer.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
+    console.log(`Servidor rodando na porta: ${PORT}`);
 });
