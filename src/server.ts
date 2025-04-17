@@ -5,15 +5,26 @@ import cors from "cors";
 import createGame from "./game/game";
 
 const app = express();
+// "http://localhost:5173" - vite
 app.use(cors({
-    origin: ["https://jogo-da-velha-client.vercel.app/", "http://localhost:5173"],
+    origin: ["https://jogo-da-velha-client.vercel.app/"],
+    methods: ["GET", "POST"],
     credentials: true,
+    preflightContinue: true
 }));
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "https://jogo-da-velha-client.vercel.app");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+});
+
 const httpServer = createServer(app);
+
 const io = new Server(httpServer, {
     cors: {
-        origin: ["https://jogo-da-velha-client.vercel.app/", "http://localhost:5173"],
+        origin: ["https://jogo-da-velha-client.vercel.app/"],
         methods: ["GET", "POST"],
         credentials: true,
     },
