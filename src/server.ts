@@ -12,6 +12,7 @@ const io = new Server(httpServer, {
     cors: {
         origin: ["https://jogo-da-velha-client.vercel.app/", "http://localhost:5173"],
         methods: ["GET", "POST"],
+        credentials: true,
     },
 });
 
