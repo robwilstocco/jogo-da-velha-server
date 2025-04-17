@@ -17,10 +17,6 @@ const io = new Server(httpServer, {
 
 const game = createGame()
 
-// io.on -> para todos, 
-// socket.on -> somente para que enviou, 
-// socket.broadcast.on -> para todos menos quem enviou
-
 io.on("connect", (socket) => {
 
     console.log("> Player connected:", socket.id);
@@ -70,8 +66,7 @@ io.on("connect", (socket) => {
     });
 });
 
-
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 httpServer.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
